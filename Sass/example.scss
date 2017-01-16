@@ -1,0 +1,47 @@
+$blue : #006600;　
+div {
+　color : $blue;
+}
+
+
+a {
+  &:hover { color:ffb3ff; }
+}
+
+.class1 {
+  border: 1px solid #ddd;
+}
+
+.class2 {
+  @extend .class1;
+  font-size:120%;
+}
+
+
+@mixin left {
+　float: left;
+　margin-left: 10px;
+}
+div {
+  @include left;
+}
+
+
+
+@mixin left($value: 10px) {
+　float: left;
+　margin-right: $value;
+}
+
+div {
+  @include left(20px);
+}
+
+
+article section { margin: 5px }
+// 命中article下直接层级section
+article > section { border: 1px solid #ccc }
+// 命中header后紧跟的p
+header + p { font-size: 1.1em }
+// 命中nav后所有同层的article
+nav ~ article { border-top: 1px dashed #ccc }
