@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>demo1</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+<script type="text/javascript">
+var result = [{x:1}, {x:2}, {x:10}, {x:15}].find(function(val, index, arr) {
+  return val.x > 9;
+});
+
+console.log(result);
+</script>
+  </body>
+</html>
