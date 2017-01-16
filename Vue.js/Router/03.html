@@ -1,0 +1,80 @@
+<html>
+<head>
+<title>Vue.js路由 - 嵌套路由</title>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+</head>
+
+
+
+
+
+<div id="app">
+  <h1>Hello App!</h1>
+  <p>
+    <!-- 使用 router-link 组件来导航. -->
+    <!-- 通过传入 `to` 属性指定链接. -->
+    <!-- <router-link> 默认会被渲染成一个 `<a>` 标签 -->
+    <router-link to="/user/111">User111</router-link>
+    <router-link to="/user/222/profile">User222</router-link>
+  </p>
+  <!-- 路由出口 -->
+  <!-- 路由匹配到的组件将渲染在这里 -->
+  <router-view></router-view>
+</div>
+
+
+
+<script type="text/javascript">
+// 0. 如果使用模块化机制编程，導入Vue和VueRouter，要调用 Vue.use(VueRouter)
+
+// 1. 定义（路由）组件。
+// 可以从其他文件 import 进来
+const User = {
+  template: `
+    <div class="user">
+      <h2>User {{ $route.params.id }}</h2>
+      <router-view></router-view>
+    </div>
+  `,
+  watch:{
+    '$route':function(to, from){
+      // 对路由变化作出响应...
+      console.log(to, from);
+    }
+  }
+};
+
+const UserDefaultProfile = {template: '<div>this is default user profile</div>'};
+const UserProfile = {template: '<div>this is user {{$route.params.id}}\'s profile</div>'};
+
+// 2. 定义路由
+// 每个路由应该映射一个组件。 其中"component" 可以是
+// 通过 Vue.extend() 创建的组件构造器，
+// 或者，只是一个组件配置对象。
+// 我们晚点再讨论嵌套路由。
+const routes = [
+  {
+    path: '/user/:id', 
+    component: User, 
+    children:[
+      {path:'', component: UserDefaultProfile}, // 默认路由
+      {path:'profile', component:UserProfile}
+    ]
+  }
+];
+
+// 3. 创建 router 实例，然后传 `routes` 配置
+// 你还可以传别的配置参数, 不过先这么简单着吧。
+const router = new VueRouter({
+  routes // （缩写）相当于 routes: routes
+});
+
+// 4. 创建和挂载根实例。
+// 记得要通过 router 配置参数注入路由，
+// 从而让整个应用都有路由功能
+const app = new Vue({ router }).$mount('#app');
+
+// 现在，应用已经启动了！
+</script>
+</html>

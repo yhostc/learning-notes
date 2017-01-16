@@ -1,0 +1,34 @@
+<html>
+<head>
+<title>Vue.js入门 - 自定义指令</title>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+
+<div id="app">
+  <input v-focus>
+</div>
+
+
+<script type="text/javascript">
+
+
+var app = new Vue({
+  el: '#app',
+  directive: function (el) {
+    // 聚焦元素
+    el.focus();
+  },
+
+  directives: {
+  	focus: {
+  		// 当绑定元素插入到 DOM 中。
+	    inserted: function (el) {
+	    	// 聚焦元素
+	    	el.focus()
+	    }
+  	}
+  }
+});
+
+</script>
+</html>

@@ -1,0 +1,53 @@
+<html>
+<head>
+<title>Vue.js入门 - Slot示例</title>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+
+<div id="app">
+  <anchored-heading :level="2">Hello world!</anchored-heading>
+</div>
+
+
+<script type="text/javascript">
+var getChildrenTextContent = function (children) {
+  return children.map(function (node) {
+    return node.children
+      ? getChildrenTextContent(node.children)
+      : node.text
+  }).join('')
+}
+Vue.component('anchored-heading', {
+  render: function (createElement) {
+    // create kebabCase id
+    var headingId = getChildrenTextContent(this.$slots.default)
+      .toLowerCase()
+      .replace(/\W+/g, '-')
+      .replace(/(^\-|\-$)/g, '');
+    console.log('-->', headingId);
+    return createElement(
+      'h' + this.level,
+      [
+        createElement('a', {
+          attrs: {
+            name: headingId,
+            href: '#' + headingId
+          }
+        }, this.$slots.default)
+      ]
+    )
+  },
+  props: {
+    level: {
+      type: Number,
+      required: true
+    }
+  }
+});
+
+var app = new Vue({
+  el: '#app'
+});
+
+</script>
+</html>

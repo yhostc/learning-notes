@@ -1,0 +1,42 @@
+<html>
+<head>
+<title>Vue.js入门 - Slot作用域</title>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+
+<div id="app">
+  <!-- 父作用域 -->
+  <child-component v-show="someChildProperty">
+    
+  </child-component>
+
+  <!-- 子作用域 -->
+  <child-component>
+    {{ message }}
+  </child-component>  
+</div>
+
+
+<script type="text/javascript">
+Vue.component('child-component', {
+  // 有效，因为是在正确的作用域内
+  template: '<div v-show="someChildProperty">Child</div>',
+  data: function () {
+    return {
+      someChildProperty: true
+    }
+  }
+});
+
+
+
+new Vue({
+  el: '#app',
+  data: {
+    someChildProperty: false,
+    message: "this is child message"
+  }
+});
+
+</script>
+</html>

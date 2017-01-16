@@ -1,0 +1,90 @@
+<html>
+<head>
+<title>Vue.js进阶 - 过渡效果 - 列表的位移过渡</title>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"></script>
+<style type="text/css">
+
+</style>
+</head>
+
+<div id="app">
+  <input v-model="query">
+  <!-- Vue已经针对DOM有效利用，仅改变需要被改变的DOM节点，因此计算属性发生变更时，有的属性需要离开(leave)，有的需要新进入(beforeEnter、enter) -->
+  <transition-group
+    name="staggered-fade"
+    tag="ul"
+    v-bind:css="false"
+    v-on:before-enter="beforeEnter"
+    v-on:enter="enter"
+    v-on:leave="leave"
+  >
+    <li
+      v-for="(item, index) in computedList"
+      v-bind:key="item.msg"
+      v-bind:data-index="index"
+    >{{ item.msg }}</li>
+  </transition-group>
+</div>
+
+
+<script type="text/javascript">
+var app = new Vue({
+  el: '#app',
+  data: {
+    query: '',
+    list: [
+      { msg: 'Bruce Lee' },
+      { msg: 'Jackie Chan' },
+      { msg: 'Chuck Norris' },
+      { msg: 'Jet Li' },
+      { msg: 'Kung Fury' }
+    ]
+  },
+  computed: {
+    computedList: function () {
+      var vm = this
+      return this.list.filter(function (item) {
+        return item.msg.toLowerCase().indexOf(vm.query.toLowerCase()) !== -1
+      })
+    }
+  },
+  methods: {
+    // 针对需要进入的LI节点，在动画进入前, 初始化动画属性
+    beforeEnter: function (el) {
+      console.log('-> beforeEnter');
+      console.log(el);
+      el.style.opacity = 0
+      el.style.height = 0
+    },
+    // 针对需要进入的LI节点，在动画进入时，改变动画参数
+    enter: function (el, done) {
+      var delay = el.dataset.index * 150;
+      console.log('-> enter');
+      console.log(el);
+      setTimeout(function () {
+        Velocity(
+          el,
+          { opacity: 1, height: '1.6em' },
+          { complete: done }
+        )
+      }, delay)
+    },
+    // 针对需要进入的LI节点,在动画离开时, 改变动画参数
+    leave: function (el, done) {
+      var delay = el.dataset.index * 150;
+      console.log('-> leave');
+      console.log(el);
+      setTimeout(function () {
+        Velocity(
+          el,
+          { opacity: 0, height: 0 },
+          { complete: done }
+        )
+      }, delay);
+    }
+  }
+});
+
+</script>
+</html>

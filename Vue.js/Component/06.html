@@ -1,0 +1,31 @@
+<html>
+<head>
+<title>Vue.js入门 - 作用域插槽</title>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+
+<div id="app">
+  <div class="parent">
+    <child>
+      <template scope="props">
+        <p>hello from parent</p>
+        <p>{{ props.text }}</p>
+      </template>
+    </child>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+Vue.component('child', {
+  template: '<div class="child">\
+  <slot text="hello from child"></slot>\
+</div>'
+})
+
+var app = new Vue({
+  el: '#app'
+});
+
+</script>
+</html>

@@ -1,0 +1,50 @@
+<html>
+<head>
+<title>Vue.js入门 - 插件</title>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+
+<div id="app">
+  
+</div>
+
+
+<script type="text/javascript">
+MyPlugin.install = function(vue, options){
+  // 1、添加全局方法或属性
+  vue.myGlobalMethod = function(){
+    // 逻辑
+  }
+
+  // 2、添加全局资源
+  vue.directive('my-directive', {
+    bind(el, binding, vnode, oldVnode){
+      // 逻辑
+    }
+  });
+
+  // 3、注入组件
+  vue.mixin({
+    created: function(){
+      // 逻辑
+    }
+  });
+
+  // 4、添加实例方法
+  vue.prototype.$myMethod = function(options){
+    // 逻辑
+    
+  }
+}
+
+Vue.use(MyPlugin, {someOption: true});
+
+new Vue({
+  el: '#app',
+  data: {
+    price : "12.3"
+  }
+});
+
+</script>
+</html>

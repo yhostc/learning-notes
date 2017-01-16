@@ -1,0 +1,42 @@
+<html>
+<head>
+<title>Vue.js入门 - 作用域插槽</title>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+
+<div id="app">
+  <my-awesome-list v-bind:items="items">
+    <!-- 作用域插槽也可以在这里命名 -->
+    <template slot="child" scope="props">
+      <li class="my-fancy-item">{{ props.text }}</li>
+    </template>
+  </my-awesome-list>
+</div>
+
+
+<script type="text/javascript">
+Vue.component('my-awesome-list', {
+  template: '<ul>\
+    <slot name="child"\
+      v-for="item in items"\
+      v-bind:text="item.text">\
+      <!-- fallback content here -->\
+    </slot>\
+  </ul>',
+  props: ['items']
+})
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    items: [
+        {text: "111111"},
+        {text: "222222"},
+        {text: "333333"},
+        {text: "444444"}
+    ]
+  }
+});
+
+</script>
+</html>

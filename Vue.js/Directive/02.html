@@ -1,0 +1,34 @@
+<html>
+<head>
+<title>Vue.js入门 - 自定义指令</title>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+
+<div id="app" v-demo:hello.a.b="{ color: 'white', text: 'hello!' }">
+
+</div>
+
+
+<script type="text/javascript">
+
+
+Vue.directive('demo', {
+  bind: function (el, binding, vnode) {
+    var s = JSON.stringify
+    el.innerHTML =
+      'name: '       + s(binding.name) + '<br>' +
+      'value: '      + s(binding.value) + '<br>' +
+      'expression: ' + s(binding.expression) + '<br>' +
+      'argument: '   + s(binding.arg) + '<br>' +
+      'modifiers: '  + s(binding.modifiers) + '<br>' +
+      'vnode keys: ' + Object.keys(vnode).join(', ')
+  }
+})
+var app = new Vue({
+  el: '#app',
+  data: {
+    message: 'hello!'
+  }
+})
+</script>
+</html>

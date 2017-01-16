@@ -1,0 +1,35 @@
+<html>
+<head>
+<title>Vue.js入门</title>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+
+<div id="app">
+  
+	<span @click="doSomething" :style="{display: isDisplay, color:color, 'font-size':size}">{{message}}</span>
+</div>
+
+
+<script type="text/javascript">
+var app = new Vue({
+  el: '#app',
+  data: {
+    message: 'Hello Vue!',
+    color: "red",
+    size: "14px",
+    isDisplay: true,
+  },
+  methods: {
+  	doSomething: function(){
+  		this.size = parseInt(this.size) +2 +'px'
+  		console.log(this);
+  	}
+  }
+});
+
+// 模拟延时修改数据
+setTimeout(function(){
+	app.message = "Welcome!";
+}, 2000);
+</script>
+</html>

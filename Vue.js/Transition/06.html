@@ -1,0 +1,37 @@
+<html>
+<head>
+<title>Vue.js进阶 - 过渡效果 - 多个元素的过渡</title>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<style type="text/css">
+
+</style>
+</head>
+
+<div id="app">
+  <transition>
+    <button v-bind:key="docState" >
+      {{ buttonMessage }}
+    </button>
+  </transition>
+</div>
+
+
+<script type="text/javascript">
+var app = new Vue({
+  el: '#app',
+  data:{
+    docState: 'saved'
+  },
+  computed: {
+    buttonMessage: function(docState){
+      switch (this.docState) {
+        case 'saved': return 'Edit'
+        case 'edited': return 'Save'
+        case 'editing': return 'Cancel'
+      }
+    }
+  }
+});
+
+</script>
+</html>

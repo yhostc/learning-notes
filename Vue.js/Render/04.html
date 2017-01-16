@@ -1,0 +1,34 @@
+<html>
+<head>
+<title>Vue.js入门 - Slot示例</title>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+
+<div id="app">
+  <anchored-heading :level="2">Hello world!</anchored-heading>
+</div>
+
+
+<script type="text/javascript">
+Vue.component('anchored-heading', {
+  render: function (createElement) {
+    console.log(this.$slots);
+    return createElement(
+      'h' + this.level,   // tag name 标签名称
+      this.$slots.default // 子组件中的阵列
+    )
+  },
+  props: {
+    level: {
+      type: Number,
+      required: true
+    }
+  }
+})
+
+var app = new Vue({
+  el: '#app'
+});
+
+</script>
+</html>
